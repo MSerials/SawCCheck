@@ -1346,7 +1346,6 @@ void SawChainMachine::Chain_Detection()
 	{
 		m_knode[l_position].TopError |= m_TopCameraResult;
 	}
-
 	l_position = get_id_by_position(m_counter, g_BtCameraPos, m_max_knode);
 	if (m_BottomCameraResult && (m_chain_length != l_position%pMainFrm->ini.m_ChainLength))
 	{
