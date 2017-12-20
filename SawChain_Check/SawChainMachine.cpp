@@ -1279,8 +1279,7 @@ bool SawChainMachine:: DiedKnode2()
 {
 	CMainFrame	* pMainFrm = (CMainFrame*)AfxGetApp()->GetMainWnd();
 	int m_chain_length = pMainFrm->ini.m_ChainLength - 1;
-	int l_position = get_id_by_position(m_counter, g_ThirdDiedKnodePos, m_max_knode);
-	
+	int l_position = get_id_by_position(m_counter, g_ThirdDiedKnodePos, m_max_knode);	
 #if 0
 	//È¥³ý¸½½üËÀ½á¼ì²â
 	int l_position1 = get_id_by_position(m_counter, g_ThirdDiedKnodePos-1, m_max_knode);
