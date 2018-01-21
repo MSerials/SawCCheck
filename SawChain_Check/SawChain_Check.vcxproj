@@ -192,6 +192,7 @@
     <ClInclude Include="BottomDlg.h" />
     <ClInclude Include="BottomView.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="CTxt.h" />
     <ClInclude Include="DMC1380Card.h" />
     <ClInclude Include="globle.h" />
     <ClInclude Include="ImageCard.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="BottomDlg.cpp" />
     <ClCompile Include="BottomView.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="CTxt.cpp" />
     <ClCompile Include="DMC1380Card.cpp" />
     <ClCompile Include="globle.cpp" />
     <ClCompile Include="ImageCard.cpp" />

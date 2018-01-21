@@ -8,6 +8,7 @@
 #include "ImageCard.h"
 #include "MainFrm.h"
 #include "Lock.h"
+#include "CTxt.h"
 
 using namespace Halcon;
 
@@ -1326,10 +1327,10 @@ void SawChainMachine::Chain_Detection()
 {
 	system_control * sc = system_control::GetIns();
 	CMainFrame	* pMainFrm = (CMainFrame*)AfxGetApp()->GetMainWnd();
-	if (UpDajiSensor()) sc->tdaji++;	//			txt->WriteContent(RTDAJI); //add excel
-	if (BtDajiSensor())	sc->bdaji++;	//			txt->WriteContent(RBDAJI);  //add excel
-	if (DoubleKnifeSensor()) sc->doubleknife++;//		txt->WriteContent(RSHUANGDAOLI); //add excel
-	if (DiedKnode2())sc->diedknode++;//			txt->WriteContent(RSIJIE3);//add excel
+	if (UpDajiSensor()) { sc->tdaji++; Csv::GetIns()->WriteContent(RTDAJI);}	
+	if (BtDajiSensor()) { sc->bdaji++; Csv::GetIns()->WriteContent(RBDAJI);}	
+	if (DoubleKnifeSensor()) { sc->doubleknife++; Csv::GetIns()->WriteContent(RSHUANGDAOLI);}
+	if (DiedKnode2()) { sc->diedknode++; Csv::GetIns()->WriteContent(RSIJIE3);}
 	MarkAction();
 	::WaitForSingleObject(sc->evt_TopCamDetect, INFINITE);				//考虑到相机处理时间最长，把等待放在最后,注意开启相机的地方在autorun里面，
 	::WaitForSingleObject(sc->evt_BottomCamDetect, INFINITE);
@@ -1368,36 +1369,44 @@ void SawChainMachine::Chain_Detection()
 
 	if (INV_KNODE == (INV_KNODE& m_TopCameraResult)) {
 		sc->tinv++; AlertInfo += L" 顶部连接片装反 ";
+		Csv::GetIns()->WriteContent(RTLIANJIEPIAN);
 	}
 	if (KNIFE == (KNIFE & m_TopCameraResult))
 	{
 		sc->tknife++; AlertInfo += L" 顶部刀粒未磨 ";
+		Csv::GetIns()->WriteContent(RTDAOKOU);
 	}
 	if (MIXCHAR == (MIXCHAR & m_TopCameraResult))
 	{
 		sc->tchar++; AlertInfo += L" 顶部字符混料 ";
+		Csv::GetIns()->WriteContent(RTZIFU);
 	}
 	if (DAJI == (DAJI & m_TopCameraResult))
 	{
 		sc->tchar++; AlertInfo += L" 顶部图像打机 ";
+		Csv::GetIns()->WriteContent(RTDAJI);
 	}
 	m_TopCameraResult = NoError;
 
 	if (INV_KNODE == (INV_KNODE& m_BottomCameraResult))
 	{
 		sc->binv++; AlertInfo1 += L" 底部连接片装反 ";
+		Csv::GetIns()->WriteContent(RBLIANJIEPIAN);
 	}
 	if (KNIFE == (KNIFE & m_BottomCameraResult))
 	{
 		sc->bknife++; AlertInfo1 += L" 底部刀粒未磨 ";
+		Csv::GetIns()->WriteContent(RBDAOKOU);
 	}
 	if (MIXCHAR == (MIXCHAR & m_BottomCameraResult))
 	{
 		sc->bchar++; AlertInfo1 += L" 底部字符混料 ";
+		Csv::GetIns()->WriteContent(RBZIFU);
 	}
 	if (DAJI == (DAJI & m_BottomCameraResult))
 	{
 		sc->tchar++; AlertInfo += L" 底部图像打机 ";
+		Csv::GetIns()->WriteContent(RBDAJI);
 	}
 	m_TopCameraResult = NoError;
 	m_BottomCameraResult = NoError;
@@ -1451,17 +1460,14 @@ void SawChainMachine::ShowAlertInfo()
 		m_ng_counter++;
 		if (!pMainFrm->sys.m_isAlertStop)
 		{
-
 			CString str = AlertInfo + AlertInfo1;
 			LOOP mc->WriteOutPutBit(OUT_LAMP_RED_TOWER, 0);
 			push_button(PAUSE);
-	//		system_pause();
 			system_control::GetIns()->runtime_error = 1;
 			AfxMessageBox(L"错误信息为："+str);
 			system_control::GetIns()->runtime_error = 0;
 			Sleep(20);
 			push_button(START);
-//			system_start();
 			LOOP mc->WriteOutPutBit(OUT_LAMP_RED_TOWER, 1);
 		}
 	}
@@ -1473,16 +1479,13 @@ void SawChainMachine::ShowAlertInfo()
 	{
 		LOOP mc->WriteOutPutBit(OUT_LAMP_RED_TOWER, 0);
 		push_button(PAUSE);
-//		system_pause();
 		system_control::GetIns()->runtime_error = 1;
 		CString str;
 		str.Format(L"可能发生错位 触发计数：%d 检测计数：%d", m_trigger_counter, m_counter);
 		AfxMessageBox(str);
 		system_control::GetIns()->runtime_error = 0;
 		Sleep(10);
-
 		push_button(START);
-//		system_start();
 		LOOP mc->WriteOutPutBit(OUT_LAMP_RED_TOWER, 1);
 	}
 	m_trigger_counter = m_counter;

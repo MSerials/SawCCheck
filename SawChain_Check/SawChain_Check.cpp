@@ -17,7 +17,7 @@
 #include "afxdialogex.h"
 #include "SawChain_Check.h"
 #include "MainFrm.h"
-
+#include "CTxt.h"
 #include "SawChain_CheckDoc.h"
 #include "SawChain_CheckView.h"
 
@@ -148,6 +148,9 @@ BOOL CSawChain_CheckApp::InitInstance()
 
 	CMainFrame* pm = (CMainFrame*)AfxGetApp()->GetMainWnd();
 	pm->Resize();
+
+	Csv::GetIns()->Init();
+
 	return TRUE;
 }
 
