@@ -255,7 +255,7 @@ private:
 		:evt_EStop(FALSE, TRUE)
 		, evt_top_grab(FALSE, TRUE)
 		, evt_bottom_grab(FALSE, TRUE)
-		//, evt_Trigger(FALSE,TRUE)
+		, evt_Trigger(FALSE,TRUE)
 		, bTrigger(false)
 		, evt_TopCamDetect(FALSE, TRUE)
 		, evt_BottomCamDetect(FALSE, TRUE)
@@ -302,7 +302,7 @@ public:
 	bool isBreakChain;
 	//检测中发现的错误，使得机器不可能被开启，比如检测到刀粒没有等
 	int runtime_error;
-	//CEvent evt_Trigger;
+	CEvent evt_Trigger;
 	bool bTrigger;
 	CEvent evt_TopCamDetect;
 	CEvent evt_BottomCamDetect;

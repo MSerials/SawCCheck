@@ -569,7 +569,7 @@ UINT SawChainMachine::system_sensor(LPVOID lp)
 	system_control * sc = system_control::GetIns();
 	for (;;)
 	{
-		Sleep(10);
+		Sleep(1);
 		if (sc->isStopScan)	continue;
 		//急停按钮开关读取感应器
 		DWORD bt_emergency = mc->ReadInPutBit(IN_ESTOP_BTN);
@@ -583,7 +583,7 @@ UINT SawChainMachine::system_sensor(LPVOID lp)
 		//相机触发感应器读取数据
 		//for a strange reason that maybe sensor not stable
 		//p->procedure();
-#if 0
+#if 1
 		int sensor_counter = 0;
 		for (int i = 0; i < 3; i++)
 		{
@@ -601,7 +601,7 @@ UINT SawChainMachine::system_sensor(LPVOID lp)
 		{
 			sc->bTrigger = true;
 			p->m_trigger_counter++;
-			//sc->evt_Trigger.SetEvent();		
+			sc->evt_Trigger.SetEvent();		
 		}
 		old_trigger_detect_state = new_trigger_detect_state;
 
@@ -665,20 +665,28 @@ UINT SawChainMachine::system_procedure(LPVOID lp)
 	DWORD old_trigger_detect_state = new_trigger_detect_state;
 	for (;;)
 	{
-		Sleep(1);
-#if 1	
+
+#if 0	
 		new_trigger_detect_state = mc->ReadInPutBit(IN_Start_Camera_SENSOR);
 		//int sensor_counter = 0;
 		if (old_trigger_detect_state != new_trigger_detect_state && new_trigger_detect_state && (p->m_system_state == START))
 		{
-			static std::mutex				 lock;
-			std::lock_guard<std::mutex> lck(lock);
 			p->m_trigger_counter++;
+			static BOOL isdealover = true;
+		
+			isdealover = false;;
 			p->Procedure();
-			//sc->bTrigger = true;
+			isdealover = true;
+			
 		}
 		old_trigger_detect_state = new_trigger_detect_state;
 #else
+		::WaitForSingleObject(sc->evt_Trigger, INFINITE);
+		p->Procedure();
+		sc->bTrigger = false;
+		sc->evt_Trigger.ResetEvent();
+
+		/**
 		//已经在扫描io口中做了判断
 		//if (WAIT_OBJECT_0 == ::WaitForSingleObject(sc->evt_process, 0))
 		{
@@ -689,6 +697,7 @@ UINT SawChainMachine::system_procedure(LPVOID lp)
 				sc->bTrigger = false;
 			}
 		}
+		*/
 #endif
 		
 	}
@@ -911,10 +920,11 @@ void SawChainMachine::Conveyor_running(int ChainNo)
 UINT SawChainMachine::Procedure()
 {	
 	if (nullptr == CurrentMotionCard()) return NOCARD;//NoCard
+
+	static std::mutex lock;
+	std::lock_guard<std::mutex> lck(lock);
 	CMotionCard * mc = CurrentMotionCard();
 	CMainFrame	* pMainFrm = (CMainFrame*)AfxGetApp()->GetMainWnd();
-//	Halcon::clear_window(CImageCard::GetIns()->disp_hd);
-//	Halcon::clear_window(CImageCard::GetIns()->disp_hd1);
 	static int chain_order = 0;
 	DWORD Tick = GetTickCount();
 	int l_position = get_id_by_position(m_counter,-50,m_max_knode);
