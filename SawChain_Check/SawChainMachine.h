@@ -102,15 +102,15 @@ public:
 	virtual CMotionCard * CurrentMotionCard();
 	std::vector<CMotionCard*> mc_vector;
 protected:
-	DWORD m_TopDoubleKnifeSensor;
-	DWORD m_BottomDoubleKnifeSensor;
-	DWORD m_TopDaJiSensor;
-	DWORD m_BottomDaJiSensor;
-	DWORD m_DiedKnodeSensor;
-	DWORD m_TopCameraResult; 
-	DWORD m_BottomCameraResult;
-	BOOL m_DiedKnodedRes;//结果的
-	BOOL m_DiedKnodedState;//状态的
+	volatile DWORD m_TopDoubleKnifeSensor;
+	volatile DWORD m_BottomDoubleKnifeSensor;
+	volatile DWORD m_TopDaJiSensor;
+	volatile DWORD m_BottomDaJiSensor;
+	volatile DWORD m_DiedKnodeSensor;
+	volatile DWORD m_TopCameraResult;
+	volatile DWORD m_BottomCameraResult;
+	volatile BOOL m_DiedKnodedRes;//结果的
+	volatile BOOL m_DiedKnodedState;//状态的
 
 	//CMotionCard * mc;
 

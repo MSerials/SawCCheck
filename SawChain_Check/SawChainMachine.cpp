@@ -684,8 +684,8 @@ UINT SawChainMachine::system_procedure(LPVOID lp)
 #else
 		::WaitForSingleObject(sc->evt_Trigger, INFINITE);
 		p->Procedure();
-		sc->bTrigger = false;
 		sc->evt_Trigger.ResetEvent();
+		sc->bTrigger = false;
 
 		/**
 		//已经在扫描io口中做了判断
