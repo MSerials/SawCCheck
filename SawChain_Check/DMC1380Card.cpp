@@ -37,6 +37,8 @@ std::string DMC1380Card::get_vendor()
 
 BOOL DMC1380Card::WriteOutPutBit(short BitNo, short BitData)
 {
+	static std::mutex mtx;
+	std::lock_guard<std::mutex> lck(mtx);
 	return (!d1000_out_bit(BitNo, BitData));
 }
 

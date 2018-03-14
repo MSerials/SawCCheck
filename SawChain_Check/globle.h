@@ -374,4 +374,4 @@ public:
 
 #endif
 
-#define LOOP for(size_t i=0; i<128;i++)
+#define LOOP for(size_t i=0; i<24;i++)

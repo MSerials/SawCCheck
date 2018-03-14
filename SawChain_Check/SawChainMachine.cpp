@@ -83,7 +83,7 @@ int SawChainMachine::InitCard()
 	//有卡的时候启动线程
 	mc_vector[stack_index]->WriteOutPutBit(OUT_SV_ON, 0);
 	StartCamera_Thread();
-	CWinThread * t1 = AfxBeginThread(system_sensor, this, THREAD_PRIORITY_NORMAL, 0, 0, NULL);
+	CWinThread * t1 = AfxBeginThread(system_sensor, this, THREAD_PRIORITY_ABOVE_NORMAL, 0, 0, NULL);
 	CWinThread * t2 = AfxBeginThread(system_procedure, this, THREAD_PRIORITY_ABOVE_NORMAL, 0, 0, NULL);
 	return NoError;
 }
@@ -569,7 +569,7 @@ UINT SawChainMachine::system_sensor(LPVOID lp)
 	system_control * sc = system_control::GetIns();
 	for (;;)
 	{
-		Sleep(1);
+		Sleep(2);
 		if (sc->isStopScan)	continue;
 		//急停按钮开关读取感应器
 		DWORD bt_emergency = mc->ReadInPutBit(IN_ESTOP_BTN);
@@ -584,13 +584,14 @@ UINT SawChainMachine::system_sensor(LPVOID lp)
 		//for a strange reason that maybe sensor not stable
 		//p->procedure();
 #if 1
-		int sensor_counter = 0;
+		static int sensor_counter = 0;
 		for (int i = 0; i < 3; i++)
 		{
 			if(mc->ReadInPutBit(IN_Start_Camera_SENSOR))
 				sensor_counter++;
 		}
 		DWORD new_trigger_detect_state = sensor_counter > 1 ? TRUE : FALSE;
+		sensor_counter = 0;
 		static DWORD old_trigger_detect_state = new_trigger_detect_state;
 
 		//对相机触发条件进行判断
@@ -1087,8 +1088,8 @@ UINT SawChainMachine::BottomCameraProcedure(LPVOID lp)
 bool SawChainMachine::StartCamera_Thread()
 {
 	pTopCamera = NULL; pBottomCamera = NULL;
-	pTopCamera = AfxBeginThread(TopCameraProcedure, this, THREAD_PRIORITY_HIGHEST, 0, 0, NULL);
-	pBottomCamera = AfxBeginThread(BottomCameraProcedure, this, THREAD_PRIORITY_HIGHEST, 0, 0, NULL);
+	pTopCamera = AfxBeginThread(TopCameraProcedure, this, THREAD_PRIORITY_ABOVE_NORMAL, 0, 0, NULL);
+	pBottomCamera = AfxBeginThread(BottomCameraProcedure, this, THREAD_PRIORITY_ABOVE_NORMAL, 0, 0, NULL);
 	if (!pTopCamera || !pBottomCamera)
 		return false;
 	else
@@ -1498,7 +1499,7 @@ void SawChainMachine::ShowAlertInfo()
 		push_button(START);
 		LOOP mc->WriteOutPutBit(OUT_LAMP_RED_TOWER, 1);
 	}
-	m_trigger_counter = m_counter;
+	m_trigger_counter = static_cast<int>(m_counter);// m_counter;
 }
 
 int SawChainMachine::get_id_by_position(int counter, int position, int max_node)

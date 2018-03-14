@@ -55,6 +55,7 @@ void CTxt::WriteContent(int ID)
 	case RTSHUANGDAOLI:		recordFile.WriteString(str+",双刀粒,顶部\n");		break;
 	case RSIJIE1:			recordFile.WriteString(str+",死结进,顶部\n");		break;
 	case RSIJIE2:			recordFile.WriteString(str+",死结出,顶部\n");		break;
+	case RSIJIE3:			recordFile.WriteString(str + ",桌面死结,顶部\n");		break;
 	case RBDAJI:			recordFile.WriteString(str+",打机,底部\n");			break;
 	case RBLIANJIEPIAN:		recordFile.WriteString(str+",连接片装反,底部\n");	break;
 	case RBDAOKOU:			recordFile.WriteString(str+",刀口,底部\n");			break;
@@ -106,6 +107,7 @@ void CTxt::WriteContent(int ID, int ChainNum)
 	case RTSHUANGDAOLI:		recordFile.WriteString(tstr+",双刀粒,顶部\n");		break;
 	case RSIJIE1:			recordFile.WriteString(tstr+",死结进,顶部\n");		break;
 	case RSIJIE2:			recordFile.WriteString(tstr+",死结出,顶部\n");		break;
+	case RSIJIE3:			recordFile.WriteString(tstr + ",桌面死结,顶部\n");		break;
 	case RBDAJI:			recordFile.WriteString(tstr+",打机,底部\n");		break;
 	case RBLIANJIEPIAN:		recordFile.WriteString(tstr+",连接片装反" + ",底部" + "\n");	break;
 	case RBDAOKOU:			recordFile.WriteString(tstr+",刀口,底部\n");		break;

@@ -25,11 +25,11 @@ public:
 	void StartTVMove(short axis, long strVel, long MaxVel, double Tacc);
 	int BackToOrigin(short axis, long strVel, long MaxVel, double Tacc);
 	//override
-	long ReadPosition(short axis);
+	inline long ReadPosition(short axis);
 	//override
-	DWORD ReadOutPutBit(short BitNo);
+	inline DWORD ReadOutPutBit(short BitNo);
 	//override
-	DWORD ReadInPutBit(short BitNo);
+	inline DWORD ReadInPutBit(short BitNo);
 
 	bool WaitSensor(short Bits, DWORD TimeOut = 1000);
 

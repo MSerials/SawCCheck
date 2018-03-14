@@ -6,6 +6,7 @@
 #include "DMC1380Card.h"
 #include <vector>
 #include <mutex>
+#include <atomic>
 
 // SawChainMachine 命令目标
 //这个机器的类，包含了动作，相机等等
@@ -116,30 +117,30 @@ protected:
 	CString AlertInfo;
 	CString AlertInfo1;
 protected:
-	bool isTopDetOver;
-	bool isBottomDetOver;
-	bool isTopProc;
-	bool isBottomProc;
-	bool isPausePressed;
-	int m_max_knode;//这个数值等于链条长度乘以gMAX_CHAIN
+	
+	std::atomic<bool> isTopDetOver;
+	std::atomic<bool> isBottomDetOver;
+	std::atomic<bool> isTopProc;
+	std::atomic<bool> isBottomProc;
+	std::atomic<bool> isPausePressed;
+	std::atomic<int> m_max_knode;//这个数值等于链条长度乘以gMAX_CHAIN
 private:
 	//用于弹出对话框的锁
 	std::mutex m_info_mtx;
-	int m_system_state;
+	//锁住变量，防止多线程访问错误
+	std::atomic<int> m_system_state = 0;
 	//触发基数
-	int m_trigger_counter;
+	std::atomic<int> m_trigger_counter = 0;
 	//检测计数
-	int m_counter;
-	int m_ng_counter;
-	int m_conveyorcounter;
+	std::atomic<int> m_counter = 0;
+	std::atomic<int> m_ng_counter = 0;
+	std::atomic<int> m_conveyorcounter = 0;
 	//int ChainOrder;
-	int stack_index;
+	std::atomic<int> stack_index = 0;
 
-	int memorise_conveyor_state;
+	std::atomic<int>  memorise_conveyor_state = 0;
 
 public:
-//	Halcon::HTuple TCharRowRef, TCharColumnRef;
-//	Halcon::HTuple BCharRowRef, BCharColumnRef;
 	
 	DMC1380Card * dmc1380;
 
