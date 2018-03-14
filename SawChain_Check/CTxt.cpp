@@ -44,22 +44,22 @@ CTxt::~CTxt()
 void CTxt::WriteContent(int ID)
 {
 	CString str;
-	str.Format(_T("%d,"),m_lastline );
+	str.Format(L"%d,",m_lastline );
 	str = str + getCurrentTime();
 	switch(ID)
 	{
-	case RTDAJI:			recordFile.WriteString(str+",打机,顶部\n");			break;
-	case RTLIANJIEPIAN:		recordFile.WriteString(str+",连接片装反,顶部\n");	break;
-	case RTDAOKOU:			recordFile.WriteString(str+",刀口,顶部\n");			break;
-	case RTZIFU:			recordFile.WriteString(str+",混料,顶部\n");		break;
-	case RTSHUANGDAOLI:		recordFile.WriteString(str+",双刀粒,顶部\n");		break;
-	case RSIJIE1:			recordFile.WriteString(str+",死结进,顶部\n");		break;
-	case RSIJIE2:			recordFile.WriteString(str+",死结出,顶部\n");		break;
-	case RSIJIE3:			recordFile.WriteString(str + ",桌面死结,顶部\n");		break;
-	case RBDAJI:			recordFile.WriteString(str+",打机,底部\n");			break;
-	case RBLIANJIEPIAN:		recordFile.WriteString(str+",连接片装反,底部\n");	break;
-	case RBDAOKOU:			recordFile.WriteString(str+",刀口,底部\n");			break;
-	case RBZIFU:			recordFile.WriteString(str+",混料,底部\n");			break;
+	case RTDAJI:			recordFile.WriteString(str+L",打机,顶部\n");			break;
+	case RTLIANJIEPIAN:		recordFile.WriteString(str+L",连接片装反,顶部\n");	break;
+	case RTDAOKOU:			recordFile.WriteString(str+L",刀口,顶部\n");			break;
+	case RTZIFU:			recordFile.WriteString(str+L",混料,顶部\n");		break;
+	case RTSHUANGDAOLI:		recordFile.WriteString(str+L",双刀粒,顶部\n");		break;
+	case RSIJIE1:			recordFile.WriteString(str+L",死结进,顶部\n");		break;
+	case RSIJIE2:			recordFile.WriteString(str+L",死结出,顶部\n");		break;
+	case RSIJIE3:			recordFile.WriteString(str + L",桌面死结,顶部\n");		break;
+	case RBDAJI:			recordFile.WriteString(str+L",打机,底部\n");			break;
+	case RBLIANJIEPIAN:		recordFile.WriteString(str+L",连接片装反,底部\n");	break;
+	case RBDAOKOU:			recordFile.WriteString(str+L",刀口,底部\n");			break;
+	case RBZIFU:			recordFile.WriteString(str+L",混料,底部\n");			break;
 	default:break;
 	}
 
@@ -69,23 +69,23 @@ void CTxt::WriteContent(int ID)
 void CTxt::WriteContent(int ID, CString str)
 {
 	CString tstr;
-	tstr.Format(_T("%d,"),m_lastline );
+	tstr.Format(L"%d,",m_lastline );
 	tstr = tstr + getCurrentTime();
 	switch(ID)
 	{
-	case RTDAJI:			recordFile.WriteString(tstr+",打机,顶部\n");		break;
-	case RTLIANJIEPIAN:		recordFile.WriteString(tstr+",连接片装反" + str + ",顶部" + "\n");	break;
-	case RTDAOKOU:			recordFile.WriteString(tstr+",刀口,顶部\n");		break;
-	case RTZIFU:			recordFile.WriteString(tstr+",混料,顶部\n");	break;
-	case RTSHUANGDAOLI:		recordFile.WriteString(tstr+",双刀粒,顶部\n");		break;
-	case RSIJIE1:			recordFile.WriteString(tstr+",死结进,顶部\n");		break;
-	case RSIJIE2:			recordFile.WriteString(tstr+",死结出,顶部\n");		break;
-	case RSIJIE3:			recordFile.WriteString(tstr+",桌面死结,顶部\n");		break;
-	case RBDAJI:			recordFile.WriteString(tstr+",打机,底部\n");		break;
-	case RBLIANJIEPIAN:		recordFile.WriteString(tstr+",连接片装反" + str + ",底部" + "\n");	break;
-	case RBDAOKOU:			recordFile.WriteString(tstr+",刀口,底部\n");		break;
-	case RBZIFU:			recordFile.WriteString(tstr+",混料,底部\n");		break;
-	case CLOSE :            recordFile.WriteString(tstr+",软件关闭,*****,\n");		break;
+	case RTDAJI:			recordFile.WriteString(tstr+L",打机,顶部\n");		break;
+	case RTLIANJIEPIAN:		recordFile.WriteString(tstr+L",连接片装反" + str + L",顶部\n");	break;
+	case RTDAOKOU:			recordFile.WriteString(tstr+L",刀口,顶部\n");		break;
+	case RTZIFU:			recordFile.WriteString(tstr+L",混料,顶部\n");	break;
+	case RTSHUANGDAOLI:		recordFile.WriteString(tstr+L",双刀粒,顶部\n");		break;
+	case RSIJIE1:			recordFile.WriteString(tstr+L",死结进,顶部\n");		break;
+	case RSIJIE2:			recordFile.WriteString(tstr+L",死结出,顶部\n");		break;
+	case RSIJIE3:			recordFile.WriteString(tstr+L",桌面死结,顶部\n");		break;
+	case RBDAJI:			recordFile.WriteString(tstr+L",打机,底部\n");		break;
+	case RBLIANJIEPIAN:		recordFile.WriteString(tstr+L",连接片装反" + str + L",底部");	break;
+	case RBDAOKOU:			recordFile.WriteString(tstr+L",刀口,底部\n");		break;
+	case RBZIFU:			recordFile.WriteString(tstr+L",混料,底部\n");		break;
+	case CLOSE :            recordFile.WriteString(tstr+L",软件关闭,*****,\n");		break;
 	default:break;
 	}
 
@@ -95,24 +95,24 @@ void CTxt::WriteContent(int ID, CString str)
 void CTxt::WriteContent(int ID, int ChainNum)
 {
 	CString tstr,nstr;
-	tstr.Format(_T("%d,"),m_lastline );
+	tstr.Format(L"%d,",m_lastline );
 	tstr = tstr + getCurrentTime();
 	nstr.Format(L"%d",ChainNum);
 	switch(ID)
 	{
-	case RTDAJI:			recordFile.WriteString(tstr+",打机,顶部\n");		break;
-	case RTLIANJIEPIAN:		recordFile.WriteString(tstr+",连接片装反" + ",顶部" + "\n");	break;
-	case RTDAOKOU:			recordFile.WriteString(tstr+",刀口,顶部\n");		break;
-	case RTZIFU:			recordFile.WriteString(tstr+",混料,顶部\n");	break;
-	case RTSHUANGDAOLI:		recordFile.WriteString(tstr+",双刀粒,顶部\n");		break;
-	case RSIJIE1:			recordFile.WriteString(tstr+",死结进,顶部\n");		break;
-	case RSIJIE2:			recordFile.WriteString(tstr+",死结出,顶部\n");		break;
-	case RSIJIE3:			recordFile.WriteString(tstr + ",桌面死结,顶部\n");		break;
-	case RBDAJI:			recordFile.WriteString(tstr+",打机,底部\n");		break;
-	case RBLIANJIEPIAN:		recordFile.WriteString(tstr+",连接片装反" + ",底部" + "\n");	break;
-	case RBDAOKOU:			recordFile.WriteString(tstr+",刀口,底部\n");		break;
-	case RBZIFU:			recordFile.WriteString(tstr+",混料,底部\n");		break;
-	case CLOSE :            recordFile.WriteString(tstr+",软件关闭,检测条数,"+nstr+"条"+"\n");		break;
+	case RTDAJI:			recordFile.WriteString(tstr+L",打机,顶部\n");		break;
+	case RTLIANJIEPIAN:		recordFile.WriteString(tstr+L",连接片装反" + L",顶部\n");	break;
+	case RTDAOKOU:			recordFile.WriteString(tstr+L",刀口,顶部\n");		break;
+	case RTZIFU:			recordFile.WriteString(tstr+L",混料,顶部\n");	break;
+	case RTSHUANGDAOLI:		recordFile.WriteString(tstr+L",双刀粒,顶部\n");		break;
+	case RSIJIE1:			recordFile.WriteString(tstr+L",死结进,顶部\n");		break;
+	case RSIJIE2:			recordFile.WriteString(tstr+L",死结出,顶部\n");		break;
+	case RSIJIE3:			recordFile.WriteString(tstr + L",桌面死结,顶部\n");		break;
+	case RBDAJI:			recordFile.WriteString(tstr+L",打机,底部\n");		break;
+	case RBLIANJIEPIAN:		recordFile.WriteString(tstr+L",连接片装反" + L",底部\n");	break;
+	case RBDAOKOU:			recordFile.WriteString(tstr+L",刀口,底部\n");		break;
+	case RBZIFU:			recordFile.WriteString(tstr+L",混料,底部\n");		break;
+	case CLOSE :            recordFile.WriteString(tstr+L",软件关闭,检测条数,"+nstr+L"条\n");		break;
 	default:break;
 	}
 
@@ -151,7 +151,8 @@ BOOL CTxt::OpenFile()
 	if (!CreateDirectory(m_strTxtPath, NULL)) ;
 	if(!finder.FindFile(path))
 	{
-		recordFile.Open(path,CFile::typeText|CFile::modeCreate|CFile::modeReadWrite);
+		recordFile.Open(path, CFile::modeCreate|CFile::modeReadWrite);
+		setlocale(LC_CTYPE, "chs");
 		CString str = L"编号,检测时间,不合格种类,顶部底部\n"; //统计:,总数,0,打机,0,顶部连接片装反,0,顶部刀口未磨,0,顶部打机,0,底部连接片装反,0,底部刀口未磨,0,混料,0,双刀粒,0,死结,0\n
 		recordFile.WriteString(str);
 		m_lastline = 1;
@@ -160,7 +161,8 @@ BOOL CTxt::OpenFile()
 	}
 	else
 	{
-		recordFile.Open(path,CFile::typeText|CFile::modeReadWrite);
+		recordFile.Open(path,CFile::modeReadWrite);
+		setlocale(LC_CTYPE, "chs");
 		m_lastline = GetLastLine();
 		m_lastline--;
 		return TRUE;

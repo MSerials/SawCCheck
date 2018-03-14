@@ -150,7 +150,6 @@ BOOL CSawChain_CheckApp::InitInstance()
 	pm->Resize();
 
 	Csv::GetIns()->Init();
-
 	return TRUE;
 }
 

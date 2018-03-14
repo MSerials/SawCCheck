@@ -19,6 +19,7 @@
 #include "MainFrm.h"
 #include "Tool.h"
 #include "ImageCard.h"
+#include "CTxt.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -59,6 +60,8 @@ CMainFrame::CMainFrame()
 		AfxMessageBox(L"程序已经运行，请勿多开。如果前一个看不见，请打开任务管理器，将进程掐掉");
 		exit(0);
 	}
+
+
 
 	pTopView = NULL;
 	pBottomView = NULL;
