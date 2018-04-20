@@ -985,12 +985,12 @@ UINT SawChainMachine::TopCameraProcedure(LPVOID lp)
 	for (;;)
 	{
 		::WaitForSingleObject(system_control::GetIns()->evt_start_top_camera, INFINITE);
+		p->m_TopCameraResult = NoError;
 		system_control::GetIns()->evt_start_top_camera.ResetEvent();
 		try 
 		{
 			Halcon::set_check("~give_error");
 			CImageCard::GetIns()->Image = CImageCard::GetIns()->GetTopImage();
-			p->m_TopCameraResult = NoError;
 			//连接扣的地方不进行检测，只是拍一张就够了
 			int l_position = p->get_id_by_position(p->m_counter, g_UpCameraPos, p->m_max_knode);
 			int m_chain_length = pMainFrm->ini.m_ChainLength - 1;
@@ -1037,13 +1037,12 @@ UINT SawChainMachine::BottomCameraProcedure(LPVOID lp)
 	for (;;)
 	{
 		::WaitForSingleObject(system_control::GetIns()->evt_start_bottom_camera, INFINITE);
+		p->m_BottomCameraResult = NoError;
 		system_control::GetIns()->evt_start_bottom_camera.ResetEvent();
 		try
 		{
 			Halcon::set_check("~give_error");
 			CImageCard::GetIns()->Image1 = CImageCard::GetIns()->GetBottomImage();
-
-			p->m_TopCameraResult = NoError;
 			//连接扣的地方不进行检测，只是拍一张就够了
 			int l_position = p->get_id_by_position(p->m_counter, g_BtCameraPos, p->m_max_knode);
 			int m_chain_length = pMainFrm->ini.m_ChainLength - 1;
@@ -1109,12 +1108,12 @@ void SawChainMachine::ScanAllSensor()
 	CMotionCard * mc = CurrentMotionCard();
 	
 	//国产货不稳定
-	//for (int i = 0; i < 32; i++) {
-		m_TopDoubleKnifeSensor = !mc->ReadInPutBit(IN_Check_Double_Sword1); //if (!m_TopDoubleKnifeSensor) break;
-	//}
-	//for (int i = 0; i < 32; i++) {
-		m_BottomDoubleKnifeSensor = !mc->ReadInPutBit(IN_Check_Double_Sword2);// if (!m_BottomDoubleKnifeSensor) break;
-	//}
+	for (int i = 0; i < 32; i++) {
+		m_TopDoubleKnifeSensor = !mc->ReadInPutBit(IN_Check_Double_Sword1); if (!m_TopDoubleKnifeSensor) break;
+	}
+	for (int i = 0; i < 32; i++) {
+		m_BottomDoubleKnifeSensor = !mc->ReadInPutBit(IN_Check_Double_Sword2); if (!m_BottomDoubleKnifeSensor) break;
+	}
 
 	m_TopDaJiSensor = mc->ReadInPutBit(IN_Check_UP_DaJi);
 	m_BottomDaJiSensor = mc->ReadInPutBit(IN_Check_BT_DaJi);
@@ -1338,10 +1337,10 @@ void SawChainMachine::Chain_Detection()
 {
 	system_control * sc = system_control::GetIns();
 	CMainFrame	* pMainFrm = (CMainFrame*)AfxGetApp()->GetMainWnd();
-	if (UpDajiSensor()) { sc->tdaji++; Csv::GetIns()->WriteContent(RTDAJI);}	
-	if (BtDajiSensor()) { sc->bdaji++; Csv::GetIns()->WriteContent(RBDAJI);}	
-	if (DoubleKnifeSensor()) { sc->doubleknife++; Csv::GetIns()->WriteContent(RSHUANGDAOLI);}
-	if (DiedKnode2()) { sc->diedknode++; Csv::GetIns()->WriteContent(RSIJIE3);}
+	if (UpDajiSensor());// { sc->tdaji++; Csv::GetIns()->WriteContent(RTDAJI); }
+	if (BtDajiSensor());// { sc->bdaji++; Csv::GetIns()->WriteContent(RBDAJI); }
+	if (DoubleKnifeSensor());// { sc->doubleknife++; Csv::GetIns()->WriteContent(RSHUANGDAOLI); }
+	if (DiedKnode2());// { sc->diedknode++; Csv::GetIns()->WriteContent(RSIJIE3); }
 	MarkAction();
 	::WaitForSingleObject(sc->evt_TopCamDetect, INFINITE);				//考虑到相机处理时间最长，把等待放在最后,注意开启相机的地方在autorun里面，
 	::WaitForSingleObject(sc->evt_BottomCamDetect, INFINITE);
@@ -1419,8 +1418,8 @@ void SawChainMachine::Chain_Detection()
 		sc->tchar++; AlertInfo += L" 底部图像打机 ";
 		Csv::GetIns()->WriteContent(RBDAJI);
 	}
-	m_TopCameraResult = NoError;
-	m_BottomCameraResult = NoError;
+//	m_TopCameraResult = NoError;
+//	m_BottomCameraResult = NoError;
 	return;
 }
 
