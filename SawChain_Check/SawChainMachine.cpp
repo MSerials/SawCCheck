@@ -1337,10 +1337,10 @@ void SawChainMachine::Chain_Detection()
 {
 	system_control * sc = system_control::GetIns();
 	CMainFrame	* pMainFrm = (CMainFrame*)AfxGetApp()->GetMainWnd();
-	if (UpDajiSensor());// { sc->tdaji++; Csv::GetIns()->WriteContent(RTDAJI); }
-	if (BtDajiSensor());// { sc->bdaji++; Csv::GetIns()->WriteContent(RBDAJI); }
-	if (DoubleKnifeSensor());// { sc->doubleknife++; Csv::GetIns()->WriteContent(RSHUANGDAOLI); }
-	if (DiedKnode2());// { sc->diedknode++; Csv::GetIns()->WriteContent(RSIJIE3); }
+	if (UpDajiSensor())sc->tdaji++;// { sc->tdaji++; Csv::GetIns()->WriteContent(RTDAJI); }
+	if (BtDajiSensor())sc->bdaji++;// { sc->bdaji++; Csv::GetIns()->WriteContent(RBDAJI); }
+	if (DoubleKnifeSensor()) sc->doubleknife++;// { sc->doubleknife++; Csv::GetIns()->WriteContent(RSHUANGDAOLI); }
+	if (DiedKnode2())sc->diedknode++;// { sc->diedknode++; Csv::GetIns()->WriteContent(RSIJIE3); }
 	MarkAction();
 	::WaitForSingleObject(sc->evt_TopCamDetect, INFINITE);				//考虑到相机处理时间最长，把等待放在最后,注意开启相机的地方在autorun里面，
 	::WaitForSingleObject(sc->evt_BottomCamDetect, INFINITE);
