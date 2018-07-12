@@ -1274,7 +1274,7 @@ bool SawChainMachine::BtDajiSensor()
 		m_knode[l_position].BottomError |= BDAJI;
 		m_knode[f_position].BottomError |= BDAJI;
 		m_knode[b_position].BottomError |= BDAJI;
-		AlertInfo1 += L" 连接点可能错位 ";
+		AlertInfo1 += L" 连接点可能错位，因为在底部打机位置检测连接扣时候不应该检测到连接片 ";
 		return true;
 	}	
 #endif
